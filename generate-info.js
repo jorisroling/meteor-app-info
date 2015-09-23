@@ -1,4 +1,5 @@
 var exec = Npm.require('child_process').exec;
+var path = Npm.require('path');
 
 function _command(cmd, cb) {
 	exec(cmd, function(err, stdout, stderr) {
@@ -36,7 +37,7 @@ var handler = function (compileStep) {
 				if (n==='date') res=_date(new Date(Date.parse(res)));
 				info[n]=res;
 				if (d==cmds.length) {
-			        var name = compileStep.inputPath.replace(/^.*[/]([^/]+).info$/, '$1');
+			        var name = compileStep.inputPath.replace(RegExp('^.*['+path.sep+']([^'+path.sep+']+).info$'), '$1');
 			        var src = "" + name + " = " + JSON.stringify(info) + ";\n" +
 						"if (Meteor.isClient) {\n" +
 						"   Template.registerHelper('" + name + "',function(field) {\n" +
