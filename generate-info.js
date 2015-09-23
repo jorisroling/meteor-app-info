@@ -37,7 +37,8 @@ var handler = function (compileStep) {
 				if (n==='date') res=_date(new Date(Date.parse(res)));
 				info[n]=res;
 				if (d==cmds.length) {
-			        var name = compileStep.inputPath.replace(RegExp('^.*['+path.sep+']([^'+path.sep+']+).info$'), '$1');
+					var sep=(path.sep=='\\')?'\\\\':path.sep;
+			        var name = compileStep.inputPath.replace(RegExp('^.*['+sep+']([^'+sep+']+).info$'), '$1');
 			        var src = "" + name + " = " + JSON.stringify(info) + ";\n" +
 						"if (Meteor.isClient) {\n" +
 						"   Template.registerHelper('" + name + "',function(field) {\n" +

@@ -1,6 +1,6 @@
 Package.describe({
     name: 'jorisroling:app-info',
-    version: '0.0.3',
+    version: '0.0.4',
     summary: 'Generates aplication info based on git',
     git: 'https://github.com/jorisroling/meteor-app-info.git',
     documentation: 'README.md'
