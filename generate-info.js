@@ -25,9 +25,7 @@ var handler = function (compileStep) {
 		var d=0;
 		for (var c in cmds) (function (name,cmd) {
 			var n=name
-			// console.log(cmd)
 			_command(cmd,function(err,res) {
-			// console.log(n)
 				d++;
 	            if (err) {
 	                compileStep.error({
@@ -38,7 +36,6 @@ var handler = function (compileStep) {
 				if (n==='date') res=_date(new Date(Date.parse(res)));
 				info[n]=res;
 				if (d==cmds.length) {
-					// console.log(info);
 			        var name = compileStep.inputPath.replace(/^.*[/]([^/]+).info$/, '$1');
 			        var src = "" + name + " = " + JSON.stringify(info) + ";\n" +
 						"if (Meteor.isClient) {\n" +
@@ -51,7 +48,6 @@ var handler = function (compileStep) {
 			            sourcePath: compileStep.inputPath,
 			            data: src
 			        }
-					console.log(opt);		
 			        compileStep.addJavaScript(opt);
 				}
 			})
