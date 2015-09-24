@@ -2,9 +2,9 @@ var exec = Npm.require('child_process').exec;
 var path = Npm.require('path');
 
 function _command(cmd, cb) {
-	exec(cmd, function(err, stdout, stderr) {
+	exec(cmd, Meteor.bindEnvironment(function(err, stdout, stderr) {
 		cb(err||stderr,stdout.split('\n').join(''));
-	})
+	}))
 }
 
 function _date(date) {
@@ -26,7 +26,7 @@ var handler = function (compileStep) {
 		var d=0;
 		for (var c in cmds) (function (name,cmd) {
 			var n=name
-			_command(cmd,function(err,res) {
+			_command(cmd,Meteor.bindEnvironment(function(err,res) {
 				d++;
 	            if (err) {
 	                compileStep.error({
@@ -52,7 +52,7 @@ var handler = function (compileStep) {
 			        }
 			        compileStep.addJavaScript(opt);
 				}
-			})
+			}))
 		})(cmds[c].name,cmds[c].cmd);
     } catch (e) {
         compileStep.error({
