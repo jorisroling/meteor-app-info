@@ -12,6 +12,8 @@ function _date(date) {
 }
 
 var handler = function (compileStep) {
+	// eyes({compileStep:compileStep});
+	
 	var info={build:_date(new Date)};
 	var cmds=[
 		{name: 'tag',cmd: 'git describe --always --tag --abbrev=0'},
@@ -34,6 +36,7 @@ var handler = function (compileStep) {
 	                    message: err
 	                });
 	            }
+				// eyes({cmd:cmd,res:res});
 				if (n==='date') res=_date(new Date(Date.parse(res)));
 				info[n]=res;
 				if (d==cmds.length) {
@@ -42,9 +45,10 @@ var handler = function (compileStep) {
 			        var src = "" + name + " = " + JSON.stringify(info) + ";\n" +
 						"if (Meteor.isClient) {\n" +
 						"   Template.registerHelper('" + name + "',function(field) {\n" +
-						"       return " + name + "[field];\n" +
+						"       return field?" + name + "[field]:"+name+";\n" +
 						"   });\n" +
 						"}";
+						// eyes({src:src});
 					var opt={
 			            path: compileStep.inputPath + '.js',
 			            sourcePath: compileStep.inputPath,
